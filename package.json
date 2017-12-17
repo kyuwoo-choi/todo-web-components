@@ -2,8 +2,7 @@
   "private": true,
   "scripts": {
     "build": "webpack",
-    "serve": "webpack-dev-server",
-    "prepublish": "npm run build"
+    "serve": "webpack-dev-server"
   },
   "dependencies": {
     "@webcomponents/webcomponentsjs": "^1.0.17",

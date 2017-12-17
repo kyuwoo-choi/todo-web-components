@@ -7,52 +7,28 @@ class TodoItem extends LitRender(HTMLElement) {
   constructor() {
     super();
 
-    this.attachShadow({ mode: 'open' });
-
     this._editing = false;
+    this._handlers = {};
 
+    this.attachShadow({ mode: 'open' });
     this.invalidate(true);
   }
 
   connectedCallback() {
     const root = this.shadowRoot;
+    const handlers = this._handlers;
     const label = root.querySelector('label');
     const edit = root.querySelector('.edit');
 
-    this._onClick = event => {
-      const todo = this.todo;
-      const classList = event.path[0].classList;
+    handlers.onClick = this._onClick.bind(this);
+    handlers.onDoubleClick = this._onDoubleClick.bind(this);
+    handlers.onFocusOut = this._onFocusOut.bind(this);
+    handlers.onKeyUp = this._onKeyUp.bind(this);
 
-      if (classList.contains('toggle')) {
-        toggle(todo.id);
-      } else if (classList.contains('destroy')) {
-        remove(todo.id);
-      }
-    };
-    root.addEventListener('click', this._onClick);
-
-    this._onDblClick = async () => {
-      this._editing = true;
-
-      await this.invalidate();
-
-      edit.value = this.todo.title;
-      edit.focus();
-    };
-    label.addEventListener('dblclick', this._onDblClick);
-
-    this._onFocusOut = () => this._setTitle(edit.value);
-    edit.addEventListener('focusout', this._onFocusOut);
-
-    this._onKeyUp = event => {
-      event.preventDefault();
-
-      const title = edit.value.trim();
-      if (event.keyCode === 13 /* KEYCODE_ENTER */ && title.length > 0) {
-        this._setTitle(title);
-      }
-    };
-    edit.addEventListener('keyup', this._onKeyUp);
+    root.addEventListener('click', handlers.onClick);
+    label.addEventListener('dblclick', handlers.onDoubleClick);
+    edit.addEventListener('focusout', handlers.onFocusOut);
+    edit.addEventListener('keyup', handlers.onKeyUp);
   }
 
   disconnectedCallback() {
@@ -60,13 +36,49 @@ class TodoItem extends LitRender(HTMLElement) {
     const label = root.querySelector('label');
     const edit = root.querySelector('.edit');
 
-    root.removeEventListener('click', this._onClick);
-    label.removeEventListener('dblclick', this._onDblClick);
-    edit.removeEventListener('focusout', this._onFocusOut);
-    edit.removeEventListener('keyup', this._onKeyUp);
+    root.removeEventListener('click', this._handlers.onClick);
+    label.removeEventListener('dblclick', this._handlers.onDblClick);
+    edit.removeEventListener('focusout', this._handlers.onFocusOut);
+    edit.removeEventListener('keyup', this._handlers.onKeyUp);
   }
 
-  _setTitle(title) {
+  _onClick(event) {
+    const id = this.todo.id;
+    const classList = event.path[0].classList;
+
+    if (classList.contains('toggle')) {
+      toggle(id);
+    } else if (classList.contains('destroy')) {
+      remove(id);
+    }
+  }
+
+  async _onDoubleClick() {
+    const edit = this.shadowRoot.querySelector('.edit');
+    this._editing = true;
+
+    await this.invalidate();
+
+    edit.value = this.todo.title;
+    edit.focus();
+  }
+
+  _onFocusOut() {
+    const edit = this.shadowRoot.querySelector('.edit');
+    this._setTodoTitle(edit.value);
+  }
+
+  _onKeyUp(event) {
+    const edit = this.shadowRoot.querySelector('.edit');
+    const title = edit.value.trim();
+
+    if (event.keyCode === 13 /* KEYCODE_ENTER */ && title.length > 0) {
+      this._setTodoTitle(title);
+      event.preventDefault();
+    }
+  }
+
+  _setTodoTitle(title) {
     this._editing = false;
     replace(this.todo.id, title);
     this.invalidate();
