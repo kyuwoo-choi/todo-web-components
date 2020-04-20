@@ -7,12 +7,11 @@
 	<title>WebComponents • TodoMVC</title>
 		<script>
 			window.onerror = function(e){
-				alert(e);
+				console.error(e);
 			}
 		</script>
     <script src="//unpkg.com/@webcomponents/webcomponentsjs@2.4.3/custom-elements-es5-adapter.js"></script>
     <script src="//unpkg.com/@webcomponents/webcomponentsjs@2.4.3/bundles/webcomponents-sd-ce.js"></script>
-    <script src="//unpkg.com/document-register-element"></script><!-- only support customElements for android 4.2+, ie8+ -->
 	<style>
 		html,
 		body {
