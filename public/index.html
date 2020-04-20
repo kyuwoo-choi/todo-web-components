@@ -3,10 +3,16 @@
 
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>WebComponents • TodoMVC</title>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.20/custom-elements-es5-adapter.js" defer></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.20/webcomponents-sd-ce.js" defer></script>
-	<script src="./dist/TodoApp.js" defer></script>
+		<script>
+			window.onerror = function(e){
+				alert(e);
+			}
+		</script>
+    <script src="//unpkg.com/@webcomponents/webcomponentsjs@2.4.3/custom-elements-es5-adapter.js"></script>
+    <script src="//unpkg.com/@webcomponents/webcomponentsjs@2.4.3/bundles/webcomponents-sd-ce.js"></script>
+    <script src="//unpkg.com/document-register-element"></script><!-- only support customElements for android 4.2+, ie8+ -->
 	<style>
 		html,
 		body {
@@ -73,5 +79,4 @@
 		</p>
 	</footer>
 </body>
-
 </html>
