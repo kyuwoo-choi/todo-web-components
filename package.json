@@ -1,9 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "build": "webpack",
     "serve": "webpack-dev-server --host 0.0.0.0",
-    "serve:build": "npx serve"
+    "build": "webpack",
+    "serve:build": "npx serve",
+    "gh-publish": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "@webcomponents/webcomponentsjs": "^2.4.3",
@@ -19,6 +20,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "core-js": "^3.6.5",
+    "gh-pages": "^2.2.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
