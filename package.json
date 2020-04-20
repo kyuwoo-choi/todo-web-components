@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "serve": "webpack-dev-server --host 0.0.0.0",
-    "build": "webpack",
+    "serve": "webpack-dev-server --history-api-fallback --host 0.0.0.0",
+    "build": "rimraf dist && webpack",
     "serve:build": "npx serve",
     "gh-publish": "npm run build && gh-pages -d dist"
   },
@@ -21,6 +21,8 @@
     "babel-preset-env": "^1.7.0",
     "core-js": "^3.6.5",
     "gh-pages": "^2.2.0",
+    "html-webpack-plugin": "^4.2.0",
+    "rimraf": "^3.0.2",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"

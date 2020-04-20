@@ -1,16 +1,13 @@
 const path = require('path');
-const webpack = require('webpack');
-
-const DIST_DIR_NAME = 'dist';
-const DIST_PATH = path.join(__dirname, DIST_DIR_NAME);
-const DIST_FILE = `TodoApp.js`;
-const PUBLIC_PATH = `http://localhost:8080/${DIST_DIR_NAME}/`;
+const webpack= require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: ['babel-polyfill', './src/index.js'],
+  entry: ['./src/index.js'],
   output: {
-    path: DIST_PATH,
-    filename: DIST_FILE
+    library: "TodoApp",
+    libraryTarget: "umd",
+    filename: "TodoApp.js",
   },
   module: {
     rules: [
@@ -35,9 +32,14 @@ module.exports = {
       },
     ]
   },
-  // plugins: [new webpack.optimize.UglifyJsPlugin()],
+  plugins: [
+    new webpack.ProgressPlugin(),
+    new HtmlWebpackPlugin({
+      filename: "index.html",
+      template: "public/index.html",
+      minify: false,
+    }),
+  ],
   devtool: 'inline-source-map',
-  devServer: {
-    publicPath: PUBLIC_PATH
-  }
+  devServer: {}
 };
