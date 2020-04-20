@@ -2,19 +2,25 @@
   "private": true,
   "scripts": {
     "build": "webpack",
-    "serve": "webpack-dev-server"
+    "serve": "webpack-dev-server --host 0.0.0.0",
+    "serve:build": "npx serve"
   },
   "dependencies": {
-    "@webcomponents/webcomponentsjs": "^1.0.17",
-    "lit-html": "^0.7.1",
-    "redux-zero": "^4.2.1"
+    "@webcomponents/webcomponentsjs": "^2.4.3",
+    "lit-html": "^1.2.1",
+    "redux-zero": "^5.1.4"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/runtime": "^7.9.2",
+    "babel-loader": "^8.1.0",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.3"
+    "babel-preset-env": "^1.7.0",
+    "core-js": "^3.6.5",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   }
 }

@@ -16,23 +16,23 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              [
-                'env',
-                {
-                  targets: {
-                    browsers: ['last 1 versions']
-                  },
-                  useBuiltIns: true
-                }
-              ]
-            ]
-          }
-        }
-      }
+        // exclude: /node_modules/,
+        exclude: /node_modules\/(?!(@webcomponents\/shadycss|lit-element|lit-html)\/).*/,
+        loader: "babel-loader",
+        options: {
+          plugins: ["@babel/plugin-transform-runtime"],
+          presets: [
+            [
+              "@babel/preset-env",
+              {
+                useBuiltIns: "usage",
+                corejs: 3,
+                targets: ["last 2 versions", "android >= 4.2"],
+              },
+            ],
+          ],
+        },
+      },
     ]
   },
   // plugins: [new webpack.optimize.UglifyJsPlugin()],
