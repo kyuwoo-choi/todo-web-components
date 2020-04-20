@@ -1,4 +1,5 @@
 import { html } from 'lit-html';
+import { classMap } from 'lit-html/directives/class-map.js';
 
 import LitRender from '../libs/litRender';
 import { toggle, remove, replace } from '../libs/actions';
@@ -95,18 +96,15 @@ class TodoItem extends LitRender(HTMLElement) {
 
   render() {
     const todo = this.todo;
-    const classCompleted = todo.completed ? ' completed' : '';
     const inputToggle = todo.completed
       ? html`<input class="toggle" type="checkbox" checked>`
       : html`<input class="toggle" type="checkbox">`;
 
-    const classEditing = this._editing ? ' editing' : '';
+    const itemMoreClasses = { completed: todo.completed, editing: this._editing };
 
     return html`
       ${style}
-      <div data-id$="${todo.id}" class$="${'item' +
-      classCompleted +
-      classEditing}">
+      <div data-id="${todo.id}" class="item ${classMap(itemMoreClasses)}">
         <div class="view">
           ${inputToggle}
           <label>${todo.title}</label>

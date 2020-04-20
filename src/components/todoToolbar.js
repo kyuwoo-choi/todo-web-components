@@ -1,4 +1,6 @@
 import { html } from 'lit-html';
+import {styleMap} from 'lit-html/directives/style-map.js';
+import { classMap } from 'lit-html/directives/class-map.js';
 
 import LitRender from '../libs/litRender';
 import store from '../libs/store';
@@ -38,15 +40,14 @@ class TodoToolbar extends LitRender(HTMLElement) {
   render() {
     const state = store.getState();
 
-    const activeItemLength = state.todoList.filter(todo => !todo.completed)
-      .length;
-    const footerDisplay = state.todoList.length > 0 ? 'block' : 'none';
+    const activeItemLength = state.todoList.filter(todo => !todo.completed).length;
+    const footerDisplayStyles = { display: state.todoList.length > 0 ? 'block' : 'none' };
 
     const CLASS_SELECTED = 'selected';
     const currentRoute = state.route;
-    const allClass = currentRoute === '' ? CLASS_SELECTED : '';
-    const activeClass = currentRoute === 'active' ? CLASS_SELECTED : '';
-    const completedClass = currentRoute === 'completed' ? CLASS_SELECTED : '';
+    const allClass = { [CLASS_SELECTED]: currentRoute === '' };
+    const activeClass = { [CLASS_SELECTED]: currentRoute === 'active' };
+    const completedClass = { [CLASS_SELECTED]: currentRoute === 'completed' };
 
     const completedItemLength = state.todoList.length - activeItemLength;
     const btnClearCompleted =
@@ -56,17 +57,17 @@ class TodoToolbar extends LitRender(HTMLElement) {
 
     return html`
       ${style}
-      <footer class="footer" style$=${'display: ' + footerDisplay}>
+      <footer class="footer" style=${styleMap(footerDisplayStyles)}>
         <span class="todo-count">${activeItemLength} item left</span>
         <ul class="filters">
           <li>
-            <a href="#/" class$="${allClass}">All</a>
+            <a href="#/" class="${classMap(allClass)}">All</a>
           </li>
           <li>
-            <a href="#/active" class$="${activeClass}">Active</a>
+            <a href="#/active" class="${classMap(activeClass)}">Active</a>
           </li>
           <li>
-            <a href="#/completed" class$="${completedClass}">Completed</a>
+            <a href="#/completed" class="${classMap(completedClass)}">Completed</a>
           </li>
         </ul>
         ${btnClearCompleted}

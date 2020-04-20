@@ -54,7 +54,7 @@ class TodoList extends LitRender(HTMLElement) {
           (route === 'active' && !todo.completed)
         );
       })
-      .map(todo => html`<todo-item todo=${todo}></todo-item>`);
+      .map(todo => html`<todo-item .todo=${todo}></todo-item>`);
 
     return html`
       ${style}
