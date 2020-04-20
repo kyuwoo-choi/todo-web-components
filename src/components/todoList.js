@@ -47,6 +47,7 @@ class TodoList extends LitRender(HTMLElement) {
         : '';
 
     const todoItems = todoList
+      .reverse()
       .filter(todo => {
         return (
           route === '' ||
