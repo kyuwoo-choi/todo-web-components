@@ -1,4 +1,4 @@
-import { render } from '../../node_modules/lit-html/lib/lit-extended';
+import { render } from 'lit-html';
 
 export default base =>
   class extends base {
